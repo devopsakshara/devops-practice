@@ -1,0 +1,7 @@
+07-06-2026
+- Installed git
+- Configured git
+- Created a github account and a repo
+- Generated PAT
+- Basic commands - init, add, commit, status, push, pull
+- Performed Push and Pull
