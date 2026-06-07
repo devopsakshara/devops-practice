@@ -1,2 +1,4 @@
 My first DevOps project
 Let me try using git pull now
+ooh.. now in understand push and pull in git
+Thanks!
