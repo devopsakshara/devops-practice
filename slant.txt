@@ -5,3 +5,7 @@
 - Generated PAT
 - Basic commands - init, add, commit, status, push, pull
 - Performed Push and Pull
+08-06-2026
+- Merge conflict
+- PR on github
+- Github Actions
