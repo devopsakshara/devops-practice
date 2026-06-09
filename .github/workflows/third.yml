@@ -1,0 +1,51 @@
+name: My Second Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - feature-login
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Say hello
+        run: |
+          echo "Hello Akshara 🚀"
+          echo "Listing files:"
+          ls -la
+
+  hi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Custom Script
+        run: ./script.sh
+
+  deploy-staging:
+    needs: [hello, hi]
+    if: startsWith(github.ref, 'refs/heads/feature-')
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Deploying to STAGING 🧪"
+
+  deploy-production:
+    needs: [hello, hi]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Deploying to PRODUCTION 🚀"
