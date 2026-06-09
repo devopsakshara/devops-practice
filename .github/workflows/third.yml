@@ -1,4 +1,4 @@
-name: My Second Pipeline
+name: Staging and Production example
 
 on:
   push:
