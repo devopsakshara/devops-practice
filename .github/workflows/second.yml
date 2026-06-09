@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature-login
 
 jobs:
   hello:
@@ -17,13 +18,8 @@ jobs:
         run: |
           echo "Hello Akshara 🚀"
           echo "Listing files:"
-          ls -lai
-on:
-  push:
-    branches:
-      - feature-login
+          ls -la
 
-jobs:
   hi:
     runs-on: ubuntu-latest
 
@@ -34,3 +30,11 @@ jobs:
       - name: Run Custom Script
         run: ./script.sh
 
+  deploy:
+    needs: [hello, hi]
+    runs-on: ubuntu-latest
+    environment: production   # 👈 THIS is the magic line
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Deploying to production"
