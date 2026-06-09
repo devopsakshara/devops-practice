@@ -1,4 +1,4 @@
-name: My Second Pipeline
+name: Staging and Production example
 
 on:
   push:
@@ -30,12 +30,22 @@ jobs:
       - name: Run Custom Script
         run: ./script.sh
 
-  deploy:
+  deploy-staging:
     needs: [hello, hi]
-    if: github.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/heads/feature-')
     runs-on: ubuntu-latest
-    environment: production   # 👈 THIS is the magic line
+    environment: staging
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo "Deploying to production"
+      - run: echo "Deploying to STAGING 🧪"
+
+  deploy-production:
+    needs: [hello, hi]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Deploying to PRODUCTION 🚀"
