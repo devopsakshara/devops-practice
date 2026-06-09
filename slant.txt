@@ -13,3 +13,4 @@
 - Merge conflict
 - PR on github
 - Github Actions
+--- Jobs left: Yesterdays note. Update it pls - urgent
