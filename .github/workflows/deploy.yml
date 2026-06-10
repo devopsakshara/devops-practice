@@ -22,4 +22,4 @@ jobs:
             cd devops-practice/my-app
             git pull origin main
             npm install
-            pm2 restart all
+            pm2 restart my-node-app
