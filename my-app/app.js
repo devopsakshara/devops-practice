@@ -1,4 +1,4 @@
-throw new Error("test failure");
+;throw new Error("test failure");
 const http = require("http");
 
 const server = http.createServer((req, res) => {
