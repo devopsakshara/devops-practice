@@ -1,0 +1,50 @@
+commands run on ec2
+
+ubuntu@ip-172-31-47-212:~$ history
+    1  sudo apt update
+    2  sudo apt install -y nodejs npm git
+    3  node -v
+    4  npm -v
+    5  git --version
+    7  git clone https://github.com/devopsakshara/devops-practice.git
+    8  cd devops-practice/my-app/
+    9  npm install
+   10  npm start
+   11  sudo npm install -g pm2
+   12  pm2 start app.js
+   13  pm2 list
+   14  pm2 save
+   15  pm2 startup
+   16  sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+   17  sudo apt install nginx -y
+   18  sudo systemctl start nginx
+   19  sudo nano /etc/nginx/sites-available/default
+   20  sudo systemctl restart nginx
+   21  nano ~/.ssh/authorized_keys
+   22  ll
+   23  vi app.js
+   24  history
+ubuntu@ip-172-31-47-212:~$
+
+
+After installing nginx on ec2 - sudo nano /etc/nginx/sites-available/default
+server{} content is added there.
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+KEY - SSH
+
+ssh-keygen -t rsa -b 4096 -C "github-actions" on my wsl machine
+~/.ssh/id_rsa        ← private key (GOES TO GITHUB) - the key we added in secrets area - Now GitHub can SSH into EC2 using that key
+~/.ssh/id_rsa.pub    ← public key (GOES TO EC2) - this should go to nano ~/.ssh/authorized_keys on ec2
