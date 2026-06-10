@@ -1,0 +1,55 @@
+name: Production Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd my-app
+          npm install
+
+      - name: Check app runs
+        run: |
+          cd my-app
+          node app.js &
+          sleep 5
+          kill $!
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.10
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+
+          script: |
+            cd /home/ubuntu/devops-practice/my-app
+            git pull origin main
+            npm install
+            pm2 reload my-node-app
+
+  deploy-production:
+    needs: [build, deploy]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Deploying to PRODUCTION 🚀"            
