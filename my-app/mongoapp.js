@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // connect to MongoDB
-mongoose.connect("mongodb://mongo-db:27017/test")
+mongoose.connect("mongodb://mongo:27017/test")
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
@@ -15,7 +15,13 @@ const User = mongoose.model("User", {
   name: String
 });
 
-// route to save data
+// to save data
+app.post("/save", async (req, res) => {
+  const user = await User.create({ name: req.body.name });
+  res.json(user);
+});
+
+// route to add data
 app.get("/add", async (req, res) => {
   await User.create({ name: "Akshara" });
   res.send("User added ✅");
