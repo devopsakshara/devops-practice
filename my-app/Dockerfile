@@ -1,15 +1,17 @@
-FROM node:18
-#FROM node:18-alpine
+# Use official Python image
+FROM python:3.11-slim
 
-WORKDIR /app
+# Set working directory
+WORKDIR /my-app
 
-COPY package*.json ./
-RUN npm install
+# Copy files
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 3000
+# Expose port
+EXPOSE 5000
 
-#CMD ["npx", "nodemon", "dynamicapp.js"]
-CMD ["npx", "nodemon", "mongoapp.js"]
-
+# Run the app
+CMD ["python", "pythonapp.py"]

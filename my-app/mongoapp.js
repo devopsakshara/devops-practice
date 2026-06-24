@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // connect to MongoDB
-mongoose.connect("mongodb://mongo:27017/test")
+mongoose.connect("mongo-docker://mongo:27017/test")
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
